@@ -1,88 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Basic Planner</title>
+    <title>Daily Planner</title>
+
     <style>
+
         body {
-            font-family: Arial;
-            background: #f4f4f4;
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+            /* FULL BACKGROUND IMAGE */
+            background: url("https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b") no-repeat center center/cover;
+
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CENTER BOX */
+        .container {
+            background: linear-gradient(135deg, #2b5876, #4e4376); /* Deep Ocean */
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
             text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            color: white;
         }
 
-        h1 {
-            margin-top: 20px;
+        h2 {
+            margin-bottom: 20px;
         }
 
-        #taskInput {
-            padding: 10px;
-            width: 250px;
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: none;
         }
 
         button {
-            padding: 10px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            background: white;
+            color: #2b5876;
+            font-weight: bold;
         }
 
         ul {
             list-style: none;
             padding: 0;
+            margin-top: 15px;
         }
 
         li {
-            background: white;
-            margin: 10px auto;
-            padding: 10px;
-            width: 300px;
+            background: rgba(255,255,255,0.2);
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
-            border-radius: 5px;
+            align-items: center;
         }
 
         .done {
             text-decoration: line-through;
-            color: gray;
+            opacity: 0.6;
         }
+
+        .time {
+            font-size: 12px;
+        }
+
     </style>
 </head>
 
 <body>
 
-<h1>📅 My Daily Planner</h1>
+<div class="container">
 
-<input type="text" id="taskInput" placeholder="Enter a task">
-<button onclick="addTask()">Add</button>
+    <h2>Planora</h2>
 
-<ul id="taskList"></ul>
+    <input type="text" id="taskInput" placeholder="Task">
+    <input type="time" id="timeInput">
+    <br>
+    <button onclick="addTask()">Add</button>
+
+    <ul id="taskList"></ul>
+
+</div>
 
 <script>
-function addTask() {
-    let input = document.getElementById("taskInput");
-    let taskText = input.value;
 
-    if(taskText === "") return;
+function addTask() {
+
+    let task = document.getElementById("taskInput").value;
+    let time = document.getElementById("timeInput").value;
+
+    if(task === "" || time === "") return;
 
     let li = document.createElement("li");
 
-    let span = document.createElement("span");
-    span.innerText = taskText;
-    span.onclick = function() {
-        span.classList.toggle("done");
+    let text = document.createElement("div");
+    text.innerHTML = task + "<br><span class='time'>" + time + "</span>";
+
+    let complete = document.createElement("button");
+    complete.innerText = "✔";
+    complete.onclick = function() {
+        text.classList.toggle("done");
     };
 
-    let delBtn = document.createElement("button");
-    delBtn.innerText = "❌";
-    delBtn.onclick = function() {
+    let del = document.createElement("button");
+    del.innerText = "❌";
+    del.onclick = function() {
         li.remove();
     };
 
-    li.appendChild(span);
-    li.appendChild(delBtn);
+    li.appendChild(text);
+    li.appendChild(complete);
+    li.appendChild(del);
 
     document.getElementById("taskList").appendChild(li);
 
-    input.value = "";
+    document.getElementById("taskInput").value = "";
+    document.getElementById("timeInput").value = "";
 }
+
 </script>
 
 </body>
 </html>
+
