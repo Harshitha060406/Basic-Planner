@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Basic Planner</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        #taskInput {
+            padding: 10px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 10px;
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 5px;
+        }
+
+        .done {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📅 My Daily Planner</h1>
+
+<input type="text" id="taskInput" placeholder="Enter a task">
+<button onclick="addTask()">Add</button>
+
+<ul id="taskList"></ul>
+
+<script>
+function addTask() {
+    let input = document.getElementById("taskInput");
+    let taskText = input.value;
+
+    if(taskText === "") return;
+
+    let li = document.createElement("li");
+
+    let span = document.createElement("span");
+    span.innerText = taskText;
+    span.onclick = function() {
+        span.classList.toggle("done");
+    };
+
+    let delBtn = document.createElement("button");
+    delBtn.innerText = "❌";
+    delBtn.onclick = function() {
+        li.remove();
+    };
+
+    li.appendChild(span);
+    li.appendChild(delBtn);
+
+    document.getElementById("taskList").appendChild(li);
+
+    input.value = "";
+}
+</script>
+
+</body>
+</html>
